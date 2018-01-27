@@ -4,36 +4,34 @@
 /* print Farenheit -> Celsius table
     for fahr = 0,20,..., 300 */
 
+#define STEPSIZE 20
+#define MAX_TEMP 300
+#define FAHR_FREEZING 32
+#define FAHR "Farenheit"
+#define CELS "Celsius"
 
 void printHeading(char* a,char* b) {
     printf("%s\t%s\n", a, b);
 }
 
 void farenheitToCelsius() {
+
+   printHeading(FAHR, CELS);
+
    float fahr;
-
-   printHeading("Farenheit", "Celsius");
-
-   for (fahr =0; fahr <= 300; fahr = fahr+20) {
-       float celsius = (5.0/ 9.0) * (fahr-32.0);
+   for (fahr = MAX_TEMP; fahr >= 0; fahr = fahr - STEPSIZE) {
+       float celsius = (5.0/ 9.0) * (fahr - FAHR_FREEZING);
        printf("%3.0f\t%6.1f\n", fahr, celsius);
    }
 }
 
 void celsiusToFarenheit() {
-   float fahr, celsius;
-   int lower, upper, step;
 
-   lower = 0;
-   upper = 300;
-   step = 20;
+   printHeading(CELS, FAHR);
 
-   celsius = lower;
-
-   printHeading("Celsius", "Farenheit");
-
-   for (celsius = 0; celsius <= 300; celsius += 20) {
-       float fahr = (celsius / 0.555 ) + 32;
+   float celsius;
+   for (celsius = 0; celsius <= MAX_TEMP; celsius += STEPSIZE) {
+       float fahr = (celsius / 0.555 ) + FAHR_FREEZING;
        printf("%3.0f\t%6.1f\n", celsius, fahr);
    }
 }
