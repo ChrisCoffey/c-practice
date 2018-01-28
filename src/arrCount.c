@@ -3,8 +3,10 @@
 #define Bool int
 #define False 0
 #define True !False
-#define GraphHeight 10
+#define GraphHeight 20
+#define HorizontalWidth 50
 #define NumValues 20
+#define AsciiRange 128
 
 Bool whitespace(char c) {
     return c == ' ' || c == '\n' || c == '\t';
@@ -49,6 +51,11 @@ int max (int l, int r) {
     return l > r ? l : r;
 }
 
+void padR (int padding) {
+    for(int i=0; i< padding; i++)
+        printf(" ");
+}
+
 // Assumes that width is >= value width
 void printWithPadding (int width, int value) {
     int x, padding;
@@ -60,8 +67,7 @@ void printWithPadding (int width, int value) {
     }
 
     printf("%d", value);
-    for(int i=0; i< padding; i++)
-        printf(" ");
+    padR(padding);
 }
 
 /* Produces the following, when run on this file:
@@ -118,6 +124,51 @@ void drawHistogram (void) {
     }
 }
 
+// Builds a horizontal histogram
+void buildCharHistogram(int * charFreqs) {
+    char c;
+    while( (c = getchar()) != EOF) {
+        charFreqs[c]++;
+    }
+}
+
+// Creates a histogram of the 128 ascii characters,
+void drawCharHistogram (void) {
+    int maxValue, tickSize, bucketLength;
+    bucketLength = AsciiRange +1;
+    int buckets [bucketLength];
+    for(int z=0; z< bucketLength; z++){
+        buckets[z] = 0;
+    }
+
+    buildCharHistogram(buckets);
+
+    maxValue=0;
+    for(int i=0; i< bucketLength; i++){
+        maxValue = max(maxValue, buckets[i]);
+    }
+
+    tickSize = maxValue / HorizontalWidth;
+    printf("%d   %d", maxValue, tickSize);
+
+    printf("Historgram of character frequencies: \n");
+    for(int i=0; i< bucketLength; i++) {
+        printf("%c  -> ", i);
+
+        int localMax = 0;
+        int val = buckets[i];
+        for(int x=0; x <HorizontalWidth; x++) {
+           if(buckets[i] >= (localMax + tickSize)) {
+               printf("x");
+               localMax += tickSize;
+           }
+           else printf(" ");
+        }
+        printf("  %d\n", val);
+    }
+
+}
+
 void charCount (void) {
     int c, i, nwhite, nother;
     int ndigit[10];
@@ -146,5 +197,6 @@ void charCount (void) {
 }
 
 int main (void) {
-    drawHistogram();
+    //drawHistogram();
+    drawCharHistogram();
 }
