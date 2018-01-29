@@ -132,7 +132,27 @@ void buildCharHistogram(int * charFreqs) {
     }
 }
 
-// Creates a histogram of the 128 ascii characters,
+/* Creates a histogram of the 128 ascii characters,
+   its a bit tall so I won't include all of it, but the output looks like this:
+^  ->                                                     0
+_  ->                                                     0
+`  ->                                                     0
+a  -> xxxx                                                147
+b  -> x                                                   31
+c  -> xxx                                                 95
+d  -> xx                                                  88
+e  -> xxxxxx                                              195
+f  -> x                                                   55
+g  -> x                                                   56
+h  -> xx                                                  88
+i  -> xxxxxxx                                             246
+j  ->                                                     0
+k  -> x                                                   32
+l  -> xxx                                                 95
+m  -> x                                                   45
+n  -> xxxx                                                147
+o  -> xx                                                  88
+*/
 void drawCharHistogram (void) {
     int maxValue, tickSize, bucketLength;
     bucketLength = AsciiRange +1;
