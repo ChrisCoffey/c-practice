@@ -1,6 +1,6 @@
 #include <stdio.h>
 // constants
-#define MaxLine 50
+#define MaxLine 10
 
 int get_line(char line[], int maxLine);
 int get_line2(char line[], int maxLine);
@@ -31,15 +31,19 @@ int get_line2(char s[], int limit) {
     for(i=0; i< limit - 1 && (c=getchar()) != EOF && c!= '\n'; ++i){
         s[i] = c;
     }
+    int end=i;
     if (c == '\n') {
         s[i]=c;
         i++;
+        end=i;
+    } else {
+        while ((c=getchar()) != EOF && c != '\n') {
+            i++;
+        }
     }
-    s[i] = '\0'; // null
 
-    while ((c=getchar()) != EOF && c != '\n') {
-        i++;
-    }
+    s[end] = '\0'; // null
+
     return i;
 
 }
