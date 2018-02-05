@@ -12,6 +12,7 @@ int get_line(char line[], int maxLine);
 int get_line2(char line[], int maxLine);
 void copy(char to[], char from[]);
 int printLineLongerThanN(int n);
+int removeTrailingBlanks(char line[]);
 
 int basicMain() {
     int len,max;
@@ -33,8 +34,7 @@ int basicMain() {
 }
 
 int main() {
-    while(!printLineLongerThanN(PrintThreshold))
-        ;
+    return runTrailingBlanks();
 }
 
 int get_line2(char s[], int limit) {
@@ -101,4 +101,36 @@ void copy(char to[], char from[]) {
     while((to[i] = from[i]) != '\0') {
         i++;
     }
+}
+
+int runTrailingBlanks() {
+    char line[1000];
+    int n, dummy;
+    dummy = 0;
+    do {
+        n = removeTrailingBlanks(line);
+        if (n > 1)
+           printf("%s|\n", line);
+        for(int i=0; i< 1000; i++)
+            line[i]=0;
+    } while(n != EOF);
+
+    return 0;
+}
+
+int removeTrailingBlanks(char line[]) {
+    int c, i;
+    for (i = 0; (c=getchar()) != EOF && c != '\n'; ++i) {
+        line[i] = c;
+    }
+
+    while(line[i] == ' ' || line[i] == '\t') {
+        i--;
+    }
+    line[i+1] = '\0';
+
+    if(c == EOF)
+        return EOF;
+    else
+        return i;
 }
