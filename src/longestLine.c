@@ -13,6 +13,8 @@ int get_line2(char line[], int maxLine);
 void copy(char to[], char from[]);
 int printLineLongerThanN(int n);
 int removeTrailingBlanks(char line[]);
+void reverseLine(char line[]);
+int readline(char line[]);
 
 int basicMain() {
     int len,max;
@@ -34,7 +36,25 @@ int basicMain() {
 }
 
 int main() {
-    return runTrailingBlanks();
+    char line[1000];
+    int n=0;
+    char reversed[1000];
+    int i,j;
+    do {
+        n = readline(line);
+        i = j = 0;
+        while(line[i] != '\0')
+            i++;
+        while(i > 0){
+            reversed[j] = line[i-1];
+            j++;
+            i--;
+        }
+        reversed[j] = '\0';
+
+        printf("%s", reversed);
+    } while (n != EOF);
+    return 0;
 }
 
 int get_line2(char s[], int limit) {
@@ -133,4 +153,31 @@ int removeTrailingBlanks(char line[]) {
         return EOF;
     else
         return i;
+}
+
+int readline(char line[]){
+    int c, i;
+    for(i=0; (c = getchar()) != EOF && c != '\n'; ++i){
+        line[i] = c;
+    }
+    line[++i] = '\n';
+    line[++i]='\0';
+    return c;
+}
+
+void reverseLine(char line[]) {
+    char reversed[1000];
+    int i,j;
+    i = j = 0;
+    while(line[i] != '\0')
+        i++;
+    while(i >= 0){
+        reversed[j] = line[i];
+        j++;
+        i--;
+    }
+    reversed[j] = '\0';
+    for(i=0;i<j;i++){
+        line[i] = reversed[i];
+    }
 }
