@@ -1,12 +1,19 @@
 #include <stdio.h>
 // constants
 #define MaxLine 10
+#define PrintThreshold 80
 
 int get_line(char line[], int maxLine);
 int get_line2(char line[], int maxLine);
 void copy(char to[], char from[]);
 
-int main() {
+
+int get_line(char line[], int maxLine);
+int get_line2(char line[], int maxLine);
+void copy(char to[], char from[]);
+int printLineLongerThanN(int n);
+
+int basicMain() {
     int len,max;
     char line[MaxLine];
     char longest[MaxLine];
@@ -23,6 +30,11 @@ int main() {
         printf("%d -> %s", max, longest);
 
     return 0;
+}
+
+int main() {
+    while(!printLineLongerThanN(PrintThreshold))
+        ;
 }
 
 int get_line2(char s[], int limit) {
@@ -46,6 +58,25 @@ int get_line2(char s[], int limit) {
 
     return i;
 
+}
+
+int printLineLongerThanN(int n){
+    char prefix[PrintThreshold];
+    int triggered, c, i;
+
+    for(i=0; i < n && (c = getchar()) != EOF && c != '\n'; ++i) {
+        prefix[i] = c;
+    }
+    triggered = (i == n);
+    prefix[PrintThreshold-1] = '\0';
+
+    if(triggered){
+        printf("%s", prefix);
+        while((c = getchar()) != EOF && c != '\n')
+            printf("%c", c);
+        printf("\n");
+    }
+    return c == EOF;
 }
 
 // modifies the input array 's', and returns the length of the string written to it
