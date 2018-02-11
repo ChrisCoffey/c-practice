@@ -1,4 +1,4 @@
-thereare all sorts of in    teresting   things   in    this  file.
+thereare all sorts of in               teresting   things   in    this  file.
 more lines
 \
 with
