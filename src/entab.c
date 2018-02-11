@@ -24,13 +24,17 @@ int main (int argc, char *argv []) {
             case LF: {
                 printf("%c", c);
                 i = wsLen = 0;
+                break;
                 }
-            case Space:
+            case Space:{
                 wsLen++;
+                break;
+                       }
             default: {
-                if (wsLen > 1)
+                if (wsLen > 0) {
                     expand(wsLen, tabWidth);
                     wsLen=0;
+                }
                 printf("%c", c);
                 }
         }
