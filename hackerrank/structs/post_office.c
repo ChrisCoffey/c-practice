@@ -59,40 +59,38 @@ void send_all_acceptable_packages(town* source, int source_office_index, town* t
         }
     }
 
-    // Expand the target package list to accomodate those packages that are moving
-    package* ptr = malloc((target_office.packages_count + moving_packages) * sizeof(package*));
+    // Expand the target package list to accommodate those packages that are moving
+    package* ptr = malloc((target_office.packages_count + moving_packages) * sizeof(package));
     for(int i=0; i< target_office.packages_count; i++){
         ptr[i] = target_office.packages[i];
     }
     target_office.packages = ptr;
 
-    // Conversely, create a new queue at the source that contains fewer packages. This isn't strictly necessary
-    package* new_source_queue = malloc((source_office.packages_count - moving_packages) * sizeof(package*));
+    // Conversely, create a new queue at the source that contains fewer packages.
+    // This isn't strictly necessary
+    package* new_source_queue = malloc((source_office.packages_count - moving_packages) * sizeof(package));
 
-    // move Add the target packages to the tail of the target office, and shrink the source office's queue
-    // accordingly
+    // move Add the target packages to the tail of the target office,
+    // and shrink the source office's queue accordingly
     for(int i=0,
             si=0,
             ti=target_office.packages_count;
             i< source_office.packages_count; i++){
+
         package source_package = source_office.packages[i];
+
         if(source_package.weight <= target_office.max_weight &&
            source_package.weight >= target_office.min_weight) {
             target_office.packages[ti++] = source_package;
-            printf("!! Moving %s\n", source_package.id);
         } else {
-            printf("__ Keeping %s\n", source_package.id);
-            new_source_queue[si] = source_package;
-            printf("Label: %s\n", new_source_queue[si].id);
-            si++;
+            new_source_queue[si++] = source_package;
         }
+
     }
 
-    printf("After loop : %s\n", new_source_queue[0].id);
     source_office.packages = new_source_queue;
     target_office.packages_count += moving_packages;
     source_office.packages_count -= moving_packages;
-    printf("Keeping %d source packages\n", source_office.packages_count);
 
     target->offices[target_office_index] = target_office;
     source->offices[source_office_index] = source_office;
